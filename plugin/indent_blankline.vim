@@ -4,7 +4,7 @@ if exists('g:loaded_indent_blankline') || !has('nvim-0.5.0')
 endif
 let g:loaded_indent_blankline = 1
 
-let g:indent_blankline_char = get(g:, 'indent_blankline_char', get(g:, 'indentLine_char', '|'))
+let g:indent_blankline_char = get(g:, 'indent_blankline_char', get(g:, 'indentLine_char', '┃'))
 let g:indent_blankline_char_list = get(g:, 'indent_blankline_char_list', get(g:, 'indentLine_char_list', []))
 let g:indent_blankline_char_highlight_list = get(g:, 'indent_blankline_char_highlight_list', [])
 

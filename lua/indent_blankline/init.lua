@@ -9,14 +9,14 @@ local space_char_blankline_highlight = "IndentBlanklineSpaceCharBlankline"
 local context_highlight = "IndentBlanklineContextChar"
 
 M.setup = function()
-    vim.g.indent_blankline_namespace = vim.api.nvim_create_namespace("indent_blankline")
+	vim.g.indent_blankline_namespace = vim.api.nvim_create_namespace("indent_blankline")
 
-    utils.reset_highlights()
+	utils.reset_highlights()
 end
 
 local refresh = function()
-    if
-        not utils.is_indent_blankline_enabled(
+	if
+		not utils.is_indent_blankline_enabled(
             vim.b.indent_blankline_enabled,
             vim.g.indent_blankline_enabled,
             vim.bo.filetype,
@@ -69,40 +69,10 @@ local refresh = function()
         for i = 1, math.min(math.max(indent, 0), max_indent_level) do
             local space_count = space
             local context = context_active and context_indent == i
-            if i ~= 1 or first_indent then
-                space_count = space_count - 1
-                table.insert(
-                    virtual_text,
-                    {
-                        utils._if(
-                            i == 1 and blankline and end_of_line and #end_of_line_char > 0,
-                            end_of_line_char,
-                            utils._if(
-                                #char_list > 0,
-                                utils.get_from_list(char_list, i - utils._if(not first_indent, 1, 0)),
-                                char
-                            )
-                        ),
-                        utils._if(
-                            context,
-                            utils._if(
-                                #context_highlight_list > 0,
-                                utils.get_from_list(context_highlight_list, i),
-                                context_highlight
-                            ),
-                            utils._if(
-                                #char_highlight_list > 0,
-                                utils.get_from_list(char_highlight_list, i),
-                                char_highlight
-                            )
-                        )
-                    }
-                )
-            end
             table.insert(
                 virtual_text,
                 {
-                    utils._if(blankline, space_char_blankline, space_char):rep(space_count),
+                    utils._if(blankline, space_char_blankline, space_char):rep(space - 1),
                     utils._if(
                         blankline,
                         utils._if(
@@ -118,34 +88,61 @@ local refresh = function()
                     )
                 }
             )
-        end
+			table.insert(
+				virtual_text,
+				{
+					utils._if(
+						i == 1 and blankline and end_of_line and #end_of_line_char > 0,
+						end_of_line_char,
+						utils._if(
+							#char_list > 0,
+							utils.get_from_list(char_list, i - utils._if(not first_indent, 1, 0)),
+							char
+						)
+					),
+					utils._if(
+						context,
+						utils._if(
+							#context_highlight_list > 0,
+							utils.get_from_list(context_highlight_list, i),
+							context_highlight
+						),
+						utils._if(
+							#char_highlight_list > 0,
+							utils.get_from_list(char_highlight_list, i),
+							char_highlight
+						)
+					)
+				}
+			)
+		end
 
-        if ((blankline and trail_indent) or extra) and (first_indent or #virtual_text > 0) then
-            local index = math.ceil(#virtual_text / 2) + 1
-            table.insert(
-                virtual_text,
-                {
-                    utils._if(
-                        #char_list > 0,
-                        utils.get_from_list(char_list, index - utils._if(not first_indent, 1, 0)),
-                        char
-                    ),
-                    utils._if(
-                        context_active and context_indent == index,
-                        utils._if(
-                            #context_highlight_list > 0,
-                            utils.get_from_list(context_highlight_list, index),
-                            context_highlight
-                        ),
-                        utils._if(
-                            #char_highlight_list > 0,
-                            utils.get_from_list(char_highlight_list, index),
-                            char_highlight
-                        )
-                    )
-                }
-            )
-        end
+--		if ((blankline and trail_indent) or extra) and (first_indent or #virtual_text > 0) then
+--			local index = math.ceil(#virtual_text / 2) + 1
+--			table.insert(
+--				virtual_text,
+--				{
+--					utils._if(
+--						#char_list > 0,
+--						utils.get_from_list(char_list, index - utils._if(not first_indent, 1, 0)),
+--						char
+--					),
+--					utils._if(
+--						context_active and context_indent == index,
+--						utils._if(
+--							#context_highlight_list > 0,
+--							utils.get_from_list(context_highlight_list, index),
+--							context_highlight
+--						),
+--						utils._if(
+--							#char_highlight_list > 0,
+--							utils.get_from_list(char_highlight_list, index),
+--							char_highlight
+--						)
+--					)
+--				}
+--            )
+--		end
 
         return virtual_text
     end
