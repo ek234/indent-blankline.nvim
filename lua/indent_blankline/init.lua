@@ -169,7 +169,7 @@ local refresh = function()
                     table.insert(
                         virtual_text,
                         {
-                            utils._if(blankline, space_char_blankline, space_char):rep(space-2),
+                            utils._if(blankline, space_char_blankline, space_char),
                             utils._if(
                                 blankline,
                                 utils._if(
@@ -193,7 +193,7 @@ local refresh = function()
                                 #char_list > 0,
                                 utils.get_from_list(char_list, i - utils._if(not first_indent, 1, 0)),
                                 char
-                            ):rep(space-2),
+                            ),
                             utils._if(
                                 context,
                                 utils._if(
@@ -213,7 +213,7 @@ local refresh = function()
                     table.insert(
                         virtual_text,
                         {
-                            utils._if(1, vim.g.indent_blankline_char_end, 0):rep(space-2),
+                            utils._if(1, vim.g.indent_blankline_char_end, 0),
                             utils._if(
                                 context,
                                 utils._if(
