@@ -42,6 +42,9 @@ local refresh = function()
     local char = vim.g.indent_blankline_char
     local char_list = vim.g.indent_blankline_char_list
     local char_highlight_list = vim.g.indent_blankline_char_highlight_list
+    local char_first = vim.g.indent_blankline_char_first
+    local char_middle = vim.g.indent_blankline_char_middle
+    local char_end = vim.g.indent_blankline_char_end
     local space_char_highlight_list = vim.g.indent_blankline_space_char_highlight_list
     local space_char_blankline_highlight_list = vim.g.indent_blankline_space_char_blankline_highlight_list
     local space_char = vim.g.indent_blankline_space_char
@@ -91,7 +94,7 @@ local refresh = function()
 							)
 						}
 					)
-				elseif vim.g.indent_blankline_char_first == " " then
+				elseif char_first == " " then
                     table.insert(
                         virtual_text,
                         {
@@ -111,7 +114,7 @@ local refresh = function()
                             )
                         }
                     )
-                elseif vim.g.indent_blankline_char_first == "|" then
+                elseif char_first == "|" then
                     table.insert(
                         virtual_text,
                         {
@@ -139,7 +142,7 @@ local refresh = function()
                     table.insert(
                         virtual_text,
                         {
-                            utils._if(1, vim.g.indent_blankline_char_first, 0),
+                            char_first,
                             utils._if(
                                 context,
                                 utils._if(
@@ -157,7 +160,7 @@ local refresh = function()
                     )
                 end
             -- middle char in indent:
-                if vim.g.indent_blankline_char_middle == " " then
+                if char_middle == " " then
                     table.insert(
                         virtual_text,
                         {
@@ -177,7 +180,7 @@ local refresh = function()
                             )
                         }
                     )
-                elseif vim.g.indent_blankline_char_middle == "|" then
+                elseif char_middle == "|" then
                     table.insert(
                         virtual_text,
                         {
@@ -205,7 +208,7 @@ local refresh = function()
                     table.insert(
                         virtual_text,
                         {
-                            utils._if(1, vim.g.indent_blankline_char_middle, 0):rep(space-2),
+                            utils._if(1, char_middle, 0):rep(space-2),
                             utils._if(
                                 context,
                                 utils._if(
@@ -223,7 +226,7 @@ local refresh = function()
                     )
                 end
             -- end char in indent:
-                if vim.g.indent_blankline_char_end == " " then
+                if char_end == " " then
                     table.insert(
                         virtual_text,
                         {
@@ -243,7 +246,7 @@ local refresh = function()
                             )
                         }
                     )
-                elseif vim.g.indent_blankline_char_end == "|" then
+                elseif char_end == "|" then
                     table.insert(
                         virtual_text,
                         {
@@ -271,7 +274,7 @@ local refresh = function()
                     table.insert(
                         virtual_text,
                         {
-                            utils._if(1, vim.g.indent_blankline_char_end, 0),
+                            char_end,
                             utils._if(
                                 context,
                                 utils._if(
